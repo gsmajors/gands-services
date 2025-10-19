@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G and S Services | Virtual Assistance & Language Solutions</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font family -->
+    <style>
+        :root {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+    </style>
+    <!-- Tailwind Configuration for Custom Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-primary': '#1D4ED8', // Strong Blue
+                        'brand-accent': '#06B6D4', // Cyan/Teal Accent
+                        'brand-bg': '#F9FAFB', // Light Gray Background
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-brand-bg text-gray-800 antialiased">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white shadow-lg sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo/Brand Name -->
+                <a href="#" class="text-3xl font-extrabold text-brand-primary tracking-tight">G & S Services</a>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#services" class="text-gray-600 hover:text-brand-primary transition duration-150 font-medium">Our Services</a>
+                    <a href="#va" class="text-gray-600 hover:text-brand-primary transition duration-150 font-medium">Virtual Assistance</a>
+                    <a href="#translation" class="text-gray-600 hover:text-brand-primary transition duration-150 font-medium">Translation</a>
+                    <a href="#contact" class="bg-brand-accent text-white py-2 px-4 rounded-full shadow-md hover:bg-opacity-90 transition duration-150">Get Started</a>
+                </nav>
+                
+                <!-- Simple Mobile Menu Placeholder -->
+                <div class="md:hidden">
+                    <button class="text-gray-600 hover:text-brand-primary p-2 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="bg-brand-primary text-white py-20 sm:py-24 md:py-32">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <p class="text-brand-accent uppercase tracking-widest font-semibold mb-3 text-sm">Efficiency. Clarity. Expertise.</p>
+                <h1 class="text-4xl sm:text-6xl font-extrabold mb-6 leading-tight">
+                    Streamline Your Business or Simplify Your Personal Life
+                </h1>
+                <p class="text-xl sm:text-2xl font-light mb-10 max-w-4xl mx-auto">
+                    G and S Services provides dedicated Virtual Assistants and expert language solutions to help you focus on growth and connect with confidence.
+                </p>
+                <!-- Link to the contact section at the bottom -->
+                <a href="#contact" class="inline-block bg-brand-accent text-white font-bold py-3 px-10 rounded-full text-lg shadow-xl hover:bg-opacity-80 transition duration-300 transform hover:scale-105">
+                    Request a Free Consultation
+                </a>
+            </div>
+        </section>
+        
+        <!-- Gemini LLM Feature: Task Breakdown Demo -->
+        <section id="strategizer" class="py-16 bg-brand-accent/10 sm:py-20 border-b border-brand-accent/30">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-extrabold text-brand-primary mb-2 flex items-center justify-center">
+                    <svg class="w-6 h-6 mr-2 text-yellow-500" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    See Our Planning in Action: Task Breakdown Demo
+                    <svg class="w-6 h-6 ml-2 text-yellow-500" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </h2>
+                <p class="text-lg text-gray-700 mb-8">
+                    Submit any complex or vague task, and our AI-enhanced process will instantly show you how we approach **structured project management** and professional client communication.
+                </p>
+
+                <div class="bg-white p-6 rounded-xl shadow-xl space-y-4">
+                    <textarea id="taskInput" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-brand-primary focus:border-brand-primary" rows="3" placeholder="Example: Coordinate the planning and booking process for my company's next off-site retreat."></textarea>
+                    
+                    <button id="strategizeButton" class="w-full bg-brand-primary text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-opacity-90 transition duration-300 transform hover:scale-[1.01] disabled:opacity-50" onclick="strategizeTask()">
+                        Generate Action Plan & Confirmation
+                    </button>
+                    
+                    <div id="loadingIndicator" class="text-brand-primary text-sm font-medium hidden mt-4">
+                        Processing... This may take a moment.
+                    </div>
+
+                    <div id="resultsContainer" class="text-left mt-6 pt-4 border-t border-gray-100 hidden">
+                        <h4 class="text-xl font-bold text-gray-900 mb-2">Our Step-by-Step Plan:</h4>
+                        <div id="stepsOutput" class="space-y-2 text-gray-700 mb-4"></div>
+
+                        <h4 class="text-xl font-bold text-gray-900 mt-6 mb-2">Draft Confirmation Email:</h4>
+                        <div id="emailOutput" class="bg-brand-bg p-4 rounded-lg border border-gray-200 whitespace-pre-wrap text-gray-700"></div>
+                    </div>
+
+                    <div id="errorDisplay" class="text-red-600 text-sm hidden mt-4"></div>
+                </div>
+            </div>
+        </section>
+        <!-- End Gemini LLM Feature -->
+
+        <!-- Main Services Block -->
+        <section id="services" class="py-16 sm:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-extrabold text-gray-900 mb-12 text-center">Our Core Offerings</h2>
+                
+                <div class="grid md:grid-cols-2 gap-10">
+                    
+                    <!-- Service Card: Virtual Assistance (Icon Updated) -->
+                    <div id="va" class="bg-white p-8 sm:p-10 rounded-xl shadow-2xl transition duration-500 hover:shadow-brand-accent/30 border-t-8 border-brand-primary">
+                        <div class="flex items-center mb-6">
+                            <!-- New Icon: Office/Remote Work -->
+                            <svg class="w-10 h-10 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-3m0 0h5m-5 0h-2"></path></svg>
+                            <h3 class="text-3xl font-bold text-gray-900">Virtual Assistance</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6 border-l-4 border-brand-primary pl-4 py-1 italic">
+                            Delegate tedious tasks and manage your time effectively with a dedicated VA partner.
+                        </p>
+                        
+                        <h4 class="font-semibold text-lg text-gray-800 mb-3">Key VA Responsibilities:</h4>
+                        
+                        <!-- NEW STRUCTURE FOR VA TASKS -->
+                        <div class="grid grid-cols-1 gap-6">
+                            <!-- Category 1: Administrative & Personal Support -->
+                            <div>
+                                <h5 class="text-brand-primary font-bold mb-2">Administrative & Personal Support</h5>
+                                <ul class="space-y-2 text-gray-600 text-sm md:text-base grid grid-cols-1 sm:grid-cols-2 gap-y-2">
+                                    <li class="flex items-start"><span class="text-brand-primary mr-2">&#10003;</span> **Scheduling** & Calendar Management</li>
+                                    <li class="flex items-start"><span class="text-brand-primary mr-2">&#10003;</span> **Email** & Phone Answering</li>
+                                    <li class="flex items-start"><span class="text-brand-primary mr-2">&#10003;</span> **Transcription** Services</li>
+                                    <li class="flex items-start"><span class="text-brand-primary mr-2">&#10003;</span> **Travel Planning** & Logistics</li>
+                                    <li class="flex items-start"><span class="text-brand-primary mr-2">&#10003;</span> **Data Entry** & Organization</li>
+                                    <li class="flex items-start"><span class="text-brand-primary mr-2">&#10003;</span> **Personal Shopping** & Errands</li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Category 2: Project Management & Operations -->
+                            <div>
+                                <h5 class="text-brand-primary font-bold mb-2 pt-4 border-t border-gray-100">Project Management & Operations</h5>
+                                <ul class="space-y-2 text-gray-600 text-sm md:text-base grid grid-cols-1 sm:grid-cols-2 gap-y-2">
+                                    <li class="flex items-start"><span class="text-brand-primary mr-2">&#10003;</span> **Project Management** Assistance</li>
+                                    <li class="flex items-start"><span class="text-brand-primary mr-2">&#10003;</span> **Purchasing** & Vendor Quotes</li>
+                                    <li class="flex items-start"><span class="text-brand-primary mr-2">&#10003;</span> **Basic Human Resources** Support</li>
+                                    <li class="flex items-start"><span class="text-brand-primary mr-2">&#10003;</span> **Operational Scheduling** & Tracking</li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <a href="#contact" class="mt-8 inline-block text-brand-primary font-semibold hover:text-brand-accent transition duration-150 border-b-2 border-brand-primary hover:border-brand-accent pb-1">Optimize Your Workflow &rarr;</a>
+                    </div>
+
+                    <!-- Service Card: Translation & Interpreting (Portuguese REMOVED) -->
+                    <div id="translation" class="bg-white p-8 sm:p-10 rounded-xl shadow-2xl transition duration-500 hover:shadow-brand-primary/30 border-t-8 border-brand-accent">
+                        <div class="flex items-center mb-6">
+                            <!-- New Icon: Language/Global -->
+                            <svg class="w-10 h-10 text-brand-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.143 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.143-3-9s1.343-9 3-9m-9 9h.01"></path></svg>
+                            <h3 class="text-3xl font-bold text-gray-900">Translation & Interpreting</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6 border-l-4 border-brand-accent pl-4 py-1 italic">
+                            Ensure crystal-clear communication in every medium with certified language experts.
+                        </p>
+
+                        <h4 class="font-semibold text-lg text-gray-800 mb-3">Language Specialties:</h4>
+                        <ul class="space-y-2 text-gray-600 text-sm md:text-base grid grid-cols-1 sm:grid-cols-2 gap-y-2">
+                            <li class="flex items-start"><span class="text-brand-accent mr-2">&#10003;</span> **Spanish** to English</li>
+                            <li class="flex items-start"><span class="text-brand-accent mr-2">&#10003;</span> **Document** Translation</li>
+                            <li class="flex items-start"><span class="text-brand-accent mr-2">&#10003;</span> **On-site** Interpreting (By arrangement)</li>
+                            <li class="flex items-start"><span class="text-brand-accent mr-2">&#10003;</span> **Legal** & Business Contexts</li>
+                        </ul>
+                        
+                        <a href="#contact" class="mt-8 inline-block text-brand-accent font-semibold hover:text-brand-primary transition duration-150 border-b-2 border-brand-accent hover:border-brand-primary pb-1">Discuss Your Language Needs &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Full-Width Visual Section -->
+        <section class="relative h-64 sm:h-80 overflow-hidden">
+            <img 
+                src="https://placehold.co/1920x400/1D4ED8/ffffff?text=Global+Reach+and+Professional+Excellence" 
+                alt="Abstract image representing global connectivity and professionalism" 
+                class="absolute inset-0 w-full h-full object-cover opacity-75"
+            >
+            <div class="absolute inset-0 bg-brand-primary/80 flex items-center justify-center">
+                <div class="text-center text-white p-4">
+                    <p class="text-2xl sm:text-4xl font-extrabold tracking-tight">
+                        Seamlessly Managed. Clearly Communicated.
+                    </p>
+                    <p class="mt-2 text-lg font-light text-brand-accent">
+                        Your efficiency is our mission.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Value Proposition Section -->
+        <section class="bg-brand-primary/5 py-16 sm:py-20">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Why Choose G and S Services?</h2>
+                <p class="text-lg text-gray-600 mb-8">
+                    We offer a unique combination of top-tier administrative support and specialized linguistic precision, all under one reliable umbrella.
+                </p>
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="p-4 bg-white rounded-lg shadow-md">
+                        <p class="text-2xl font-extrabold text-brand-primary">100%</p>
+                        <p class="text-sm text-gray-600">Confidentiality</p>
+                    </div>
+                    <div class="p-4 bg-white rounded-lg shadow-md">
+                        <p class="text-2xl font-extrabold text-brand-primary">24/7</p>
+                        <p class="text-sm text-gray-600">Flexible Support</p>
+                    </div>
+                    <div class="p-4 bg-white rounded-lg shadow-md">
+                        <p class="text-2xl font-extrabold text-brand-primary">Native</p>
+                        <p class="text-sm text-gray-600">Language Experts</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section (Form Removed) -->
+        <section id="contact" class="py-16 sm:py-24">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 bg-white p-8 md:p-12 rounded-xl shadow-2xl border border-gray-100 text-center">
+                <h2 class="text-4xl font-extrabold text-brand-primary mb-4">Ready to Get Started?</h2>
+                <p class="text-lg text-gray-600 mb-10">
+                    The fastest way to begin is by reaching out directly via phone, email, or WhatsApp. We look forward to discussing your project!
+                </p>
+                
+                <!-- Centralized Contact Links -->
+                <div id="contact-links" class="pt-4 text-center">
+                    <div class="flex flex-col space-y-4 sm:flex-row sm:space-x-8 sm:space-y-0 justify-center">
+                        
+                        <!-- Email -->
+                        <a href="mailto:gsmajors2000@gmail.com" class="group bg-brand-primary text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-opacity-90 transition duration-300 transform hover:scale-105 flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-17 4v7a2 2 0 002 2h12a2 2 0 002-2v-7"></path></svg>
+                            Email Us
+                        </a>
+
+                        <!-- Phone -->
+                        <a href="tel:+17758468910" class="group bg-brand-accent text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-opacity-90 transition duration-300 transform hover:scale-105 flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                            Call (775.846.8910)
+                        </a>
+
+                        <!-- WhatsApp -->
+                        <a href="https://wa.me/17753384464" target="_blank" rel="noopener noreferrer" class="group bg-green-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-opacity-90 transition duration-300 transform hover:scale-105 flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.52 3.42 1.5 4.88l-1.57 5.75 6.01-1.54c1.42.87 3.06 1.34 4.07 1.34h.15c5.46 0 9.91-4.45 9.91-9.91 0-5.46-4.45-9.91-9.91-9.91zm4.73 13.59c-.27.7-.85 1.07-1.58 1.07-.65 0-1.07-.35-1.5-.72-.43-.37-1.5-1.25-1.85-1.46-.35-.21-.6-.28-.85.28-.25.56-.98 1.43-1.2 1.66-.22.23-.44.25-.82.09-.45-.18-1.78-.65-2.54-1.57-.76-.92-1.26-2.07-1.4-2.3-.14-.23-.01-.35.21-.57.2-.21.45-.48.67-.72.2-.24.27-.47.4-.69.13-.22.06-.41-.03-.57-.09-.16-.85-2.05-1.16-2.8-.3-.74-.63-.64-.87-.65-.21-.01-.45-.02-.7-.02-.25 0-.67.09-1.01.48-.34.39-1.29 1.28-1.29 3.12 0 1.84 1.32 3.6 1.48 3.86.16.26 2.67 4.09 6.44 5.38 3.77 1.28 3.77.85 4.47.8.7-.06 1.95-.79 2.23-1.5.28-.71.28-1.31.2-1.43-.07-.12-.27-.2-.57-.37z"/>
+                            </svg>
+                            WhatsApp Chat
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-4">
+                <a href="#" class="text-2xl font-extrabold text-brand-accent tracking-tight">G & S Services</a>
+            </div>
+            <p class="text-gray-400 text-sm mb-4">
+                Virtual Assistance | Translation & Interpreting Services
+            </p>
+            <!-- Contact Information Row (Redundant, but kept for visual links) -->
+            <div class="flex flex-col sm:flex-row justify-center items-center space-x-0 sm:space-x-4 text-sm sm:space-y-0 space-y-2">
+                
+                <!-- Group 1: Navigation Links -->
+                <div class="flex space-x-4">
+                    <a href="#services" class="text-gray-300 hover:text-brand-accent">Services</a>
+                    <a href="#contact" class="text-gray-300 hover:text-brand-accent">Contact Us</a>
+                </div>
+
+                <!-- Separator (Visible only on medium/large screens) -->
+                <span class="text-gray-500 hidden sm:inline">|</span>
+
+                <!-- Group 2: Contact Details -->
+                <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0 items-center">
+                    <!-- Phone Link (TEL URI UPDATED for reliability) -->
+                    <a href="tel:+17758468910" class="text-gray-300 hover:text-brand-accent">(775.846.8910)</a>
+                    
+                    <!-- Separator (Visible only on medium/large screens) -->
+                    <span class="text-gray-500 hidden sm:inline">|</span>
+
+                    <!-- Email Link -->
+                    <a href="mailto:gsmajors2000@gmail.com" class="text-gray-300 hover:text-brand-accent">gsmajors2000@gmail.com</a>
+                </div>
+                
+                <!-- Separator (Visible only on medium/large screens) -->
+                <span class="text-gray-500 hidden sm:inline">|</span>
+
+                <!-- WhatsApp Link -->
+                <a href="https://wa.me/17753384464" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-brand-accent flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.52 3.42 1.5 4.88l-1.57 5.75 6.01-1.54c1.42.87 3.06 1.34 4.07 1.34h.15c5.46 0 9.91-4.45 9.91-9.91 0-5.46-4.45-9.91-9.91-9.91zm4.73 13.59c-.27.7-.85 1.07-1.58 1.07-.65 0-1.07-.35-1.5-.72-.43-.37-1.5-1.25-1.85-1.46-.35-.21-.6-.28-.85.28-.25.56-.98 1.43-1.2 1.66-.22.23-.44.25-.82.09-.45-.18-1.78-.65-2.54-1.57-.76-.92-1.26-2.07-1.4-2.3-.14-.23-.01-.35.21-.57.2-.21.45-.48.67-.72.2-.24.27-.47.4-.69.13-.22.06-.41-.03-.57-.09-.16-.85-2.05-1.16-2.8-.3-.74-.63-.64-.87-.65-.21-.01-.45-.02-.7-.02-.25 0-.67.09-1.01.48-.34.39-1.29 1.28-1.29 3.12 0 1.84 1.32 3.6 1.48 3.86.16.26 2.67 4.09 6.44 5.38 3.77 1.28 3.77.85 4.47.8.7-.06 1.95-.79 2.23-1.5.28-.71.28-1.31.2-1.43-.07-.12-.27-.2-.57-.37z"/>
+                    </svg>
+                    WhatsApp
+                </a>
+            </div>
+            <p class="mt-6 text-xs text-gray-500">&copy; 2025 G and S Services. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Gemini API Feature -->
+    <script>
+        const API_KEY = ""; // Placeholder for Canvas API Key
+        const MODEL_NAME = "gemini-2.5-flash-preview-09-2025";
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
+        
+        const taskInput = document.getElementById('taskInput');
+        const strategizeButton = document.getElementById('strategizeButton');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const stepsOutput = document.getElementById('stepsOutput');
+        const emailOutput = document.getElementById('emailOutput');
+        const errorDisplay = document.getElementById('errorDisplay');
+
+        // Helper function for exponential backoff during API calls
+        async function fetchWithRetry(url, options, maxRetries = 5) {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (response.status !== 429) { // Not a Rate Limit error
+                        return response;
+                    }
+                    const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                } catch (error) {
+                    // Log connection errors but retry
+                    const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+            throw new Error("API call failed after multiple retries.");
+        }
+
+        async function strategizeTask() {
+            const userTask = taskInput.value.trim();
+            if (userTask.length < 20) {
+                errorDisplay.textContent = "Please enter a complex task (at least 20 characters) for the VA to strategize.";
+                errorDisplay.classList.remove('hidden');
+                resultsContainer.classList.add('hidden');
+                return;
+            }
+
+            // Reset UI states
+            errorDisplay.classList.add('hidden');
+            resultsContainer.classList.add('hidden');
+            stepsOutput.innerHTML = '';
+            emailOutput.textContent = '';
+            loadingIndicator.classList.remove('hidden');
+            strategizeButton.disabled = true;
+
+            const systemPrompt = `You are an expert Virtual Assistant project manager known for clarity and efficiency. A client provides a high-level task. Your job is to generate a JSON object that strictly adheres to the provided schema. The output must contain:
+1. An array of 5 to 7 highly actionable, sequential steps ('steps') to complete the task.
+2. A professional, concise email draft ('emailDraft') confirming receipt of the task and outlining the strategy to the client. The email should be polite and confirm that the VA is commencing work.`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userTask }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: {
+                            "steps": {
+                                "type": "ARRAY",
+                                "description": "5-7 highly actionable, sequential steps.",
+                                "items": { "type": "STRING" }
+                            },
+                            "emailDraft": {
+                                "type": "STRING",
+                                "description": "A professional, concise email draft to the client."
+                            }
+                        },
+                        required: ["steps", "emailDraft"]
+                    }
+                }
+            };
+
+            try {
+                const response = await fetchWithRetry(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.error?.message || `HTTP error! status: ${response.status}`);
+                }
+
+                const jsonText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (!jsonText) {
+                    throw new Error("Received an empty response from the AI model.");
+                }
+
+                const structuredResponse = JSON.parse(jsonText);
+
+                // Display Steps
+                if (structuredResponse.steps && Array.isArray(structuredResponse.steps)) {
+                    structuredResponse.steps.forEach((step, index) => {
+                        const li = document.createElement('div');
+                        li.className = 'flex items-start';
+                        li.innerHTML = `<span class="font-bold text-brand-accent mr-2">${index + 1}.</span> <span>${step}</span>`;
+                        stepsOutput.appendChild(li);
+                    });
+                } else {
+                     stepsOutput.innerHTML = '<p class="text-red-500">Could not parse steps.</p>';
+                }
+
+                // Display Email Draft
+                if (structuredResponse.emailDraft) {
+                    emailOutput.textContent = structuredResponse.emailDraft;
+                } else {
+                    emailOutput.textContent = 'Could not generate email draft.';
+                }
+                
+                resultsContainer.classList.remove('hidden');
+
+            } catch (e) {
+                console.error("Gemini API Error:", e);
+                errorDisplay.textContent = `Error strategizing task: ${e.message}. Please try a different task.`;
+                errorDisplay.classList.remove('hidden');
+            } finally {
+                loadingIndicator.classList.add('hidden');
+                strategizeButton.disabled = false;
+            }
+        }
+
+        // Initialize function
+        window.onload = () => {
+             // Optional: Pre-fill the task input for demonstration
+             taskInput.value = "Coordinate the planning and booking process for my company's next off-site retreat.";
+        };
+    </script>
+</body>
+</html>
